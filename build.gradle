@@ -24,6 +24,10 @@ dependencies {
     implementation platform('software.amazon.awssdk:bom:2.13.20')
     implementation 'software.amazon.awssdk:s3'
 
+    // https://mvnrepository.com/artifact/org.postgresql/postgresql
+    implementation group: 'org.postgresql', name: 'postgresql', version: '42.2.12'
+
+
     // This dependency is used by the application.
     implementation 'com.google.guava:guava:28.2-jre'
 
