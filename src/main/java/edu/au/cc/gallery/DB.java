@@ -53,9 +53,10 @@ public class DB {
 
    public void close() throws SQLException {
       connection.close();
+      System.out.println("Database closed");
    }
 
-   public static void demo() throws Exception {
+  /* public static void demo() throws Exception {
       DB db = new DB();
       db.connect();
       db.execute("update users set password=? where username=?", new String[] {"monkey", "fred"});
@@ -63,6 +64,49 @@ public class DB {
       while (rs.next()) System.out.println(rs.getString(1)+"'"+rs.getString(2)+"'"+rs.getString(3));
       rs.close();
       db.close();
-  }
+  }*/
 
+  public void listUsers() throws SQLException {
+        PreparedStatement stmt = connection.prepareStatement("select * from users;");
+        ResultSet rs = stmt.executeQuery();
+        while (rs.next()) {
+            System.out.println(rs.getString(1)+","+rs.getString(2)+","+rs.getString(3));
+        }
+        rs.close();
+    }
+
+  public void addUser(String username, String password, String fullName) throws SQLException {
+        PreparedStatement stmt = connection.prepareStatement("insert into users (username, password, full_name) values (?, ?, ?);");
+        stmt.setString(1, username);
+        stmt.setString(2, password);
+        stmt.setString(3, fullName);
+        stmt.execute();
+        System.out.println("User " + username + " added");
+    }
+
+  public void editUser(String editUserName, String editPassword, String editFullName) throws SQLException {
+        PreparedStatement stmt = connection.prepareStatement("update users set password=?, full_name=? where username=?;");
+        stmt.setString(1, editPassword);
+        stmt.setString(2, editFullName);
+        stmt.setString(3, editUserName);
+        stmt.execute();
+        System.out.println("User " + editUserName + " password and full name updated.");
+    }
+
+  public void deleteUser(String deleteName) throws SQLException {
+        PreparedStatement stmt = connection.prepareStatement("delete from users where username=?;");
+        stmt.setString(1, deleteName);
+        stmt.execute();
+        System.out.println("User " + deleteName + " deleted from database");
+    }
+
+  public boolean userExists(String query) throws SQLException {
+        PreparedStatement stmt = connection.prepareStatement("select * from users where username=?");
+        stmt.setString(1, query);
+        ResultSet rs = stmt.executeQuery();
+        if (rs.next()) {
+            return true;
+        }
+        return false;
+    }
 }

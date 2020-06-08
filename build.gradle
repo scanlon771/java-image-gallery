@@ -39,3 +39,7 @@ application {
     // Define the main class for the application.
     mainClassName = 'edu.au.cc.gallery.App'
 }
+
+run{
+    standardInput = System.in
+}

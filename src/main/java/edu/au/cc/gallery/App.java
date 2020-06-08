@@ -3,6 +3,8 @@
  */
 package edu.au.cc.gallery;
 
+import  edu.au.cc.gallery.tools.*;
+
 public class App {
     public String getGreeting() {
         return "Hello Kenneth.";
@@ -11,6 +13,8 @@ public class App {
     public static void main(String[] args) throws Exception {
         //System.out.println(new App().getGreeting());
 	//s3.demo();
-        DB.demo();
+        // DB.demo();
+        UserAdmin admin = new UserAdmin();
+        admin.userMenu();
     }
 }
